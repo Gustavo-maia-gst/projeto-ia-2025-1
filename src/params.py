@@ -1,0 +1,64 @@
+"""
+This class contains the hyperparameters for the genetic algorithm.
+
+It also contains some default values that may be overwritten by the user via
+command line arguments or via a config file.
+
+A brief description of the selection methods:
+
+    Elitism: ELITISM_RATE of the best chromosomes are chosen by elitism to go to the next generation.
+
+    Tournament: TOURNAMENT_RATE chromosomes are chosen by tournaments of size TOURNAMENT_SIZE, the best one goes to the next generation.
+
+    Crossover: CROSSOVER_RATE of the chromosomes are chosen by crossover, the best one goes to the next generation,
+               crossover is applied to the chromosomes using the tournament method.
+
+    Lottery: 1 - TOURNAMENT_RATE - ELITISM_RATE - CROSSOVER_RATE of the chromosomes are chosen by lottery, the lucky one goes to the next generation,
+"""
+
+
+class Params:
+    # Default values as constants
+    DEFAULT_POPULATION_SIZE: int = 32
+    DEFAULT_STEP_SIZE: float = 1
+    DEFAULT_TOURNAMENT_RATE: float = 0.5
+    DEFAULT_TOURNAMENT_SIZE: int = 4
+    DEFAULT_ELITISM_RATE: float = 0.1
+    DEFAULT_CROSSOVER_RATE: float = 0.3
+    DEFAULT_CROSSOVER_MUTATION_RATE: float = 0.05
+    DEFAULT_LOTTERY_RATE: float = 0.1
+    DEFAULT_FPS: int = 5
+    DEFAULT_DEPTH: int = 20
+    DEFAULT_PLOT_LEVELS_2D: int = 35
+
+    # Class attributes using default constants
+    POPULATION_SIZE: int = (
+        DEFAULT_POPULATION_SIZE  # Number of chromosomes in the population
+    )
+    STEP_SIZE: float = DEFAULT_STEP_SIZE  # Mutation rate of the chromosomes
+
+    TOURNAMENT_RATE: float = (
+        DEFAULT_TOURNAMENT_RATE  # Rate of the next generation choosen by tournament
+    )
+    TOURNAMENT_SIZE: int = (
+        DEFAULT_TOURNAMENT_SIZE  # Number of chromosomes in the tournament
+    )
+
+    ELITISM_RATE: float = (
+        DEFAULT_ELITISM_RATE  # Rate of the next generation choosen by elitism
+    )
+
+    CROSSOVER_RATE: float = (
+        DEFAULT_CROSSOVER_RATE  # Rate of the next generation choosen by crossover
+    )
+    CROSSOVER_MUTATION_RATE: float = (
+        DEFAULT_CROSSOVER_MUTATION_RATE  # Mutation rate applied to chromosomes after crossover
+    )
+
+    LOTTERY_RATE: float = (
+        DEFAULT_LOTTERY_RATE  # Rate of the next generation choosen by lottery
+    )
+
+    FPS: int = DEFAULT_FPS  # Frames per second
+    DEPTH: int = DEFAULT_DEPTH  # Depth of the plot
+    PLOT_LEVELS_2D: int = DEFAULT_PLOT_LEVELS_2D  # Number of levels in the 2D plot
