@@ -34,6 +34,7 @@ class Params:
     DEFAULT_FPS: int = 5
     DEFAULT_DEPTH: int = 50
     DEFAULT_PLOT_LEVELS_2D: int = 35
+    DEFAULT_AUTO_FIT: bool = False
 
     # Class attributes using default constants
     POPULATION_SIZE: int = (
@@ -70,3 +71,4 @@ class Params:
     FPS: int = DEFAULT_FPS  # Frames per second
     DEPTH: int = DEFAULT_DEPTH  # Depth of the plot
     PLOT_LEVELS_2D: int = DEFAULT_PLOT_LEVELS_2D  # Number of levels in the 2D plot
+    AUTO_FIT: bool = DEFAULT_AUTO_FIT  # Whether to auto fit the plot
