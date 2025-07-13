@@ -22,7 +22,7 @@ class Plotter:
         fig, ax = self._getFig()
         self._ax = ax
 
-        ax.set_aspect("equal", adjustable="datalim")
+        # ax.set_aspect("auto")
         ax.set_title(f"Animação de pontos sobre {self.alg.expr}")
 
         ani = animation.FuncAnimation(

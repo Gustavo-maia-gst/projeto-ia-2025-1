@@ -33,6 +33,7 @@ def define_params(args: argparse.ArgumentParser) -> Params:
         default=Params.DEFAULT_CROSSOVER_MUTATION_RATE,
     )
     args.add_argument("--lottery-rate", type=float, default=Params.DEFAULT_LOTTERY_RATE)
+    args.add_argument("--random-rate", type=float, default=Params.DEFAULT_RANDOM_RATE)
     args.add_argument("--fps", type=int, default=Params.DEFAULT_FPS)
     args.add_argument("-d", "--depth", type=int, default=Params.DEFAULT_DEPTH)
     args.add_argument(
@@ -53,6 +54,7 @@ def get_params(args: argparse.ArgumentParser) -> Params:
     params.CROSSOVER_RATE = parsed_args.crossover_rate
     params.CROSSOVER_MUTATION_RATE = parsed_args.crossover_mutation_rate
     params.LOTTERY_RATE = parsed_args.lottery_rate
+    params.RANDOM_RATE = parsed_args.random_rate
     params.FPS = parsed_args.fps
     params.DEPTH = parsed_args.depth
     params.PLOT_LEVELS_2D = parsed_args.plot_levels
@@ -80,6 +82,7 @@ def get_params(args: argparse.ArgumentParser) -> Params:
                     "crossover_mutation_rate", params.CROSSOVER_MUTATION_RATE
                 )
                 params.LOTTERY_RATE = config.get("lottery_rate", params.LOTTERY_RATE)
+                params.RANDOM_RATE = config.get("random_rate", params.RANDOM_RATE)
                 params.FPS = config.get("fps", params.FPS)
                 params.DEPTH = config.get("depth", params.DEPTH)
 

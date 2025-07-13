@@ -16,8 +16,11 @@ class Genetic:
 
     def next_generation(self) -> list[Chromosome]:
         if len(self.population) < self.params.POPULATION_SIZE:
-            mutated = [c.mutate(self.params.STEP_SIZE) for c in self.population]
-            self.population.extend(mutated)
+            randomic = [
+                Chromosome.random(self.params, self.symbols, self.params.DEFAULT_DEPTH)
+                for _ in self.population
+            ]
+            self.population.extend(randomic)
             return self.population
 
         ordered = sorted(
@@ -29,6 +32,7 @@ class Genetic:
         new_generation.extend(self.get_elitism_pop(ordered))
         new_generation.extend(self.get_tournament_pop(ordered))
         new_generation.extend(self.get_crossover_pop(ordered))
+        new_generation.extend(self.get_random_pop(ordered))
 
         while len(new_generation) < self.params.POPULATION_SIZE:
             lucky_one = random.randint(0, len(ordered) - 1)
@@ -47,6 +51,14 @@ class Genetic:
         return [
             self.__tournament(ordered).mutate(self.params.STEP_SIZE)
             for _ in range(tournament_pop_size)
+        ]
+
+    def get_random_pop(self, ordered: list[Chromosome]) -> list[Chromosome]:
+        random_pop_size = int(self.params.RANDOM_RATE * len(ordered))
+
+        return [
+            Chromosome.random(self.params, self.symbols, self.params.DEFAULT_DEPTH)
+            for _ in range(random_pop_size)
         ]
 
     def get_crossover_pop(self, ordered: list[Chromosome]) -> list[Chromosome]:

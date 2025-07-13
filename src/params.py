@@ -13,7 +13,9 @@ A brief description of the selection methods:
     Crossover: CROSSOVER_RATE of the chromosomes are chosen by crossover, the best one goes to the next generation,
                crossover is applied to the chromosomes using the tournament method.
 
-    Lottery: 1 - TOURNAMENT_RATE - ELITISM_RATE - CROSSOVER_RATE of the chromosomes are chosen by lottery, the lucky one goes to the next generation,
+    Random: RANDOM_RATE of the chromosomes are randommically genrated to go to the next generation.
+
+    Lottery: 1 - TOURNAMENT_RATE - ELITISM_RATE - CROSSOVER_RATE - RANDOM_RATE of the chromosomes are chosen by lottery, the lucky one goes to the next generation,
 """
 
 
@@ -21,14 +23,16 @@ class Params:
     # Default values as constants
     DEFAULT_POPULATION_SIZE: int = 32
     DEFAULT_STEP_SIZE: float = 1
-    DEFAULT_TOURNAMENT_RATE: float = 0.5
+    DEFAULT_TOURNAMENT_RATE: float = 0.4
     DEFAULT_TOURNAMENT_SIZE: int = 4
     DEFAULT_ELITISM_RATE: float = 0.1
     DEFAULT_CROSSOVER_RATE: float = 0.3
     DEFAULT_CROSSOVER_MUTATION_RATE: float = 0.05
     DEFAULT_LOTTERY_RATE: float = 0.1
+    DEFAULT_RANDOM_RATE: float = 0.1
+
     DEFAULT_FPS: int = 5
-    DEFAULT_DEPTH: int = 20
+    DEFAULT_DEPTH: int = 50
     DEFAULT_PLOT_LEVELS_2D: int = 35
 
     # Class attributes using default constants
@@ -57,6 +61,10 @@ class Params:
 
     LOTTERY_RATE: float = (
         DEFAULT_LOTTERY_RATE  # Rate of the next generation choosen by lottery
+    )
+
+    RANDOM_RATE: float = (
+        DEFAULT_RANDOM_RATE  # Rate of the next generation choosen by random
     )
 
     FPS: int = DEFAULT_FPS  # Frames per second
