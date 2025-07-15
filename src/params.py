@@ -6,21 +6,24 @@ command line arguments or via a config file.
 
 A brief description of the selection methods:
 
-    Elitism: ELITISM_RATE of the best chromosomes are chosen by elitism to go to the next generation.
+    Elitism: The elitism rate selects the best chromosomes to go to the next generation.
 
-    Tournament: TOURNAMENT_RATE chromosomes are chosen by tournaments of size TOURNAMENT_SIZE, the best one goes to the next generation.
+    Tournament: TOURNAMENT_RATE chromosomes are chosen by tournaments of size TOURNAMENT_SIZE, 
+                the best one goes to the next generation.
 
-    Crossover: CROSSOVER_RATE of the chromosomes are chosen by crossover, the best one goes to the next generation,
+    Crossover: CROSSOVER_RATE of the chromosomes are chosen by crossover, 
+               the best one goes to the next generation,
                crossover is applied to the chromosomes using the tournament method.
 
     Random: RANDOM_RATE of the chromosomes are randommically genrated to go to the next generation.
 
-    Lottery: 1 - TOURNAMENT_RATE - ELITISM_RATE - CROSSOVER_RATE - RANDOM_RATE of the chromosomes are chosen by lottery, the lucky one goes to the next generation,
+    Lottery: 1 - TOURNAMENT_RATE - ELITISM_RATE - CROSSOVER_RATE - RANDOM_RATE of the chromosomes 
+                 are chosen by lottery, the lucky one goes to the next generation,
 """
 
 
 class Params:
-    # Default values as constants
+    '''Default values as constants'''
     DEFAULT_POPULATION_SIZE: int = 32
     DEFAULT_STEP_SIZE: float = 1
     DEFAULT_TOURNAMENT_RATE: float = 0.4

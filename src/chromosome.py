@@ -57,7 +57,7 @@ class Chromosome(ABC):
 
     def mutate(self, sigma: float) -> "Chromosome":
         '''mutates its own chromosome'''
-        
+
         new_genes: list[float] = list(
             map(lambda g: g + random.gauss(0, sigma), self.genes)
         )

@@ -1,8 +1,9 @@
 # TODO: Make it great
-
+''' main program '''
 import argparse
 import os
 import json
+import sys
 
 import sympy
 from genetic import Genetic
@@ -13,6 +14,8 @@ CONFIG_FILE = "../config.json"
 
 
 def define_params(args: argparse.ArgumentParser) -> Params:
+    '''define the parameters for standardization'''
+
     args.add_argument(
         "--population-size", type=int, default=Params.DEFAULT_POPULATION_SIZE
     )
@@ -42,6 +45,8 @@ def define_params(args: argparse.ArgumentParser) -> Params:
 
 
 def get_params(args: argparse.ArgumentParser) -> Params:
+    '''take the default parameters or read them from the files'''
+
     parsed_args = args.parse_args()
 
     params = Params()
@@ -61,7 +66,7 @@ def get_params(args: argparse.ArgumentParser) -> Params:
 
     if os.path.exists(CONFIG_FILE):
         try:
-            with open(CONFIG_FILE, "r") as f:
+            with open(CONFIG_FILE, "r", encoding='utf-8') as f:
                 config = json.load(f)
 
                 params.POPULATION_SIZE = config.get(
@@ -86,28 +91,33 @@ def get_params(args: argparse.ArgumentParser) -> Params:
                 params.FPS = config.get("fps", params.FPS)
                 params.DEPTH = config.get("depth", params.DEPTH)
 
-        except Exception as ex:
-            print(f"Error loading config file: {ex}")
+        except json.JSONDecodeError as ex:
+            print(f"Error loading json : {ex}")
+        except OSError as ex:
+            print(f"Error of system: {ex}")
 
     return params
 
 
 if __name__ == "__main__":
-    args = argparse.ArgumentParser(description="Genetic Algorithm")
-    define_params(args)
-    params = get_params(args)
+    parser = argparse.ArgumentParser(description="Genetic Algorithm")
+    define_params(parser)
+    settings = get_params(parser)
 
     funcionStr = input("Defina a função: ")
 
     try:
         expr = sympy.sympify(funcionStr)
-    except Exception as ex:
+    except sympy.SympifyError as ex:
         print(f"Função inválida.\n{ex}")
-        exit(1)
+        sys.exit(1)
+    except TypeError as ex:
+        print(f"A entrada fornecida não é uma string válida para uma função: {ex}")
+        sys.exit(1)
 
     symbols = list(expr.free_symbols)
-    alg = Genetic(params, symbols, expr)
+    alg = Genetic(settings, symbols, expr)
 
-    plotter = Plotter(alg, params, len(symbols) == 2)
+    plotter = Plotter(alg, settings, len(symbols) == 2)
 
     plotter.show()
