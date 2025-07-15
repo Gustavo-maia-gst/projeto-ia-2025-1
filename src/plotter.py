@@ -50,7 +50,7 @@ class Plotter:
         y = np.linspace(-self.params.DEPTH, self.params.DEPTH, 25)
         X, Y = np.meshgrid(x, y)
         points = np.c_[X.ravel(), Y.ravel()]
-        Z_flat = self.alg.batchFitness(points)
+        Z_flat = self.alg.batch_fitness(points)
 
         Z = np.array(Z_flat, dtype=np.float64).reshape(X.shape)
 
@@ -65,7 +65,7 @@ class Plotter:
 
     def _getFig1d(self):
         x = np.linspace(-self.params.DEPTH, self.params.DEPTH, 100)
-        y = self.alg.batchFitness([[e] for e in x])
+        y = self.alg.batch_fitness([[e] for e in x])
 
         fig, ax = plt.subplots(figsize=(8, 8))
         ax.plot(x, y)

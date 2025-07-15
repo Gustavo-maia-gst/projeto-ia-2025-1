@@ -15,7 +15,7 @@ A brief description of the selection methods:
                the best one goes to the next generation,
                crossover is applied to the chromosomes using the tournament method.
 
-    Random: RANDOM_RATE of the chromosomes are randommically genrated to go to the next generation.
+    Random: RANDOM_RATE of the chromosomes are randommically generated to go to the next generation.
 
     Lottery: 1 - TOURNAMENT_RATE - ELITISM_RATE - CROSSOVER_RATE - RANDOM_RATE of the chromosomes 
                  are chosen by lottery, the lucky one goes to the next generation,

@@ -1,3 +1,5 @@
+'''the genetic algorithm'''
+
 import random
 import sympy
 from chromosome import Chromosome
@@ -5,6 +7,8 @@ from params import Params
 
 
 class Genetic:
+    '''the all methods of genetic algorithm'''
+
     def __init__(self, params: Params, symbols: list[sympy.Symbol], expr: sympy.Expr):
         self.params = params
         self.symbols = symbols
@@ -15,6 +19,8 @@ class Genetic:
         self.population = [Chromosome.random(params, symbols, params.STEP_SIZE)]
 
     def next_generation(self) -> list[Chromosome]:
+        '''returns the individuals of the next generation'''
+
         if len(self.population) < self.params.POPULATION_SIZE:
             randomic = [
                 Chromosome.random(self.params, self.symbols, self.params.DEFAULT_DEPTH)
@@ -43,9 +49,12 @@ class Genetic:
         return self.population
 
     def get_elitism_pop(self, ordered: list[Chromosome]) -> list[Chromosome]:
+        '''takes the best of the whole population'''
+
         return ordered[: int(self.params.ELITISM_RATE * len(ordered))]
 
     def get_tournament_pop(self, ordered: list[Chromosome]) -> list[Chromosome]:
+
         tournament_pop_size = int(self.params.TOURNAMENT_RATE * len(ordered))
 
         return [
@@ -54,6 +63,7 @@ class Genetic:
         ]
 
     def get_random_pop(self, ordered: list[Chromosome]) -> list[Chromosome]:
+        '''create new random individuals '''
         random_pop_size = int(self.params.RANDOM_RATE * len(ordered))
 
         return [
@@ -62,6 +72,7 @@ class Genetic:
         ]
 
     def get_crossover_pop(self, ordered: list[Chromosome]) -> list[Chromosome]:
+        '''make the crossover between two random individuals, and mutate it'''
         crossover_pop_size = int(self.params.CROSSOVER_RATE * len(ordered))
         crossover_pop = []
         for _ in range(crossover_pop_size):
@@ -82,7 +93,9 @@ class Genetic:
 
         return ordered[min(participants)]
 
-    def batchFitness(self, genes: list[list[float]]) -> list[float]:
+    def batch_fitness(self, genes: list[list[float]]) -> list[float]:
+        '''return the values of all individuals'''
+
         if any(len(gene) != len(self.symbols) for gene in genes):
             raise ValueError(
                 "All genes must have the same length as the number of symbols"
@@ -121,4 +134,6 @@ class Genetic:
 
 
 def is_power_of_two(n: int) -> bool:
+    '''check if n is power of two'''
+
     return (n & (n - 1)) == 0
