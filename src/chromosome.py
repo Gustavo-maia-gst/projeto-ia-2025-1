@@ -1,4 +1,6 @@
-from abc import ABC, abstractmethod
+'''keeps the characteristics of an individual'''
+
+from abc import ABC
 import random
 import sympy
 
@@ -6,6 +8,8 @@ from params import Params
 
 
 class Chromosome(ABC):
+    '''keeps the characteristics of an individual'''
+
     def __init__(self, params: Params, symbols: list[sympy.Symbol], genes: list[float]):
         self.params = params
 
@@ -24,15 +28,21 @@ class Chromosome(ABC):
     def random(
         params: Params, symbols: list[sympy.Symbol], sigma: float
     ) -> "Chromosome":
+        '''returns a random chromosome'''
+
         genes = [random.gauss(0, sigma) for _ in symbols]
         return Chromosome(params, symbols, genes)
 
     def fitness(self, f: sympy.Expr) -> float:
-        subs_map = {s: g for s, g in zip(self.symbols, self.genes)}
+        '''return "value" of chromossome'''
+
+        subs_map = dict(zip(self.symbols, self.genes))
 
         return f.subs(subs_map).evalf()
 
     def crossover(self, other: "Chromosome") -> "Chromosome":
+        '''make crossover between two chromossomes'''
+
         if len(self.symbols) != len(other.symbols):
             raise ValueError("Symbols must be the same length")
 
@@ -46,6 +56,8 @@ class Chromosome(ABC):
         return Chromosome(self.params, self.symbols, new_genes)
 
     def mutate(self, sigma: float) -> "Chromosome":
+        '''mutates its own chromosome'''
+        
         new_genes: list[float] = list(
             map(lambda g: g + random.gauss(0, sigma), self.genes)
         )
