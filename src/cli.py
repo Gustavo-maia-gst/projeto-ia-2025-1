@@ -8,9 +8,6 @@ from genetic import Genetic
 from params import Params
 from plotter import Plotter
 
-CONFIG_FILE = "../config.json"
-
-
 def define_params(args: argparse.ArgumentParser) -> Params:
     '''define the parameters for standardization'''
 
@@ -44,7 +41,7 @@ def define_params(args: argparse.ArgumentParser) -> Params:
 
 
 def get_params(args: argparse.ArgumentParser) -> Params:
-    '''take the default parameters or read them from the files'''
+    '''take the default parameters'''
 
     parsed_args = args.parse_args()
 
