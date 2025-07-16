@@ -1,8 +1,6 @@
 # TODO: Make it great
 ''' main program '''
 import argparse
-import os
-import json
 import sys
 
 import sympy
@@ -20,6 +18,7 @@ def define_params(args: argparse.ArgumentParser) -> Params:
         "--population-size", type=int, default=Params.DEFAULT_POPULATION_SIZE
     )
     args.add_argument("--step-size", type=float, default=Params.DEFAULT_STEP_SIZE)
+    args.add_argument("--max-steps", type=int, default=Params.DEFAULT_MAX_STEPS)
     args.add_argument(
         "--tournament-rate", type=float, default=Params.DEFAULT_TOURNAMENT_RATE
     )
@@ -53,6 +52,7 @@ def get_params(args: argparse.ArgumentParser) -> Params:
 
     params.POPULATION_SIZE = parsed_args.population_size
     params.STEP_SIZE = parsed_args.step_size
+    params.MAX_STEPS = parsed_args.max_steps
     params.TOURNAMENT_RATE = parsed_args.tournament_rate
     params.TOURNAMENT_SIZE = parsed_args.tournament_size
     params.ELITISM_RATE = parsed_args.elitism_rate
@@ -64,38 +64,6 @@ def get_params(args: argparse.ArgumentParser) -> Params:
     params.DEPTH = parsed_args.depth
     params.PLOT_LEVELS_2D = parsed_args.plot_levels
 
-    if os.path.exists(CONFIG_FILE):
-        try:
-            with open(CONFIG_FILE, "r", encoding='utf-8') as f:
-                config = json.load(f)
-
-                params.POPULATION_SIZE = config.get(
-                    "population_size", params.POPULATION_SIZE
-                )
-                params.STEP_SIZE = config.get("step_size", params.STEP_SIZE)
-                params.TOURNAMENT_RATE = config.get(
-                    "tournament_rate", params.TOURNAMENT_RATE
-                )
-                params.TOURNAMENT_SIZE = config.get(
-                    "tournament_size", params.TOURNAMENT_SIZE
-                )
-                params.ELITISM_RATE = config.get("elitism_rate", params.ELITISM_RATE)
-                params.CROSSOVER_RATE = config.get(
-                    "crossover_rate", params.CROSSOVER_RATE
-                )
-                params.CROSSOVER_MUTATION_RATE = config.get(
-                    "crossover_mutation_rate", params.CROSSOVER_MUTATION_RATE
-                )
-                params.LOTTERY_RATE = config.get("lottery_rate", params.LOTTERY_RATE)
-                params.RANDOM_RATE = config.get("random_rate", params.RANDOM_RATE)
-                params.FPS = config.get("fps", params.FPS)
-                params.DEPTH = config.get("depth", params.DEPTH)
-
-        except json.JSONDecodeError as ex:
-            print(f"Error loading json : {ex}")
-        except OSError as ex:
-            print(f"Error of system: {ex}")
-
     return params
 
 def main():
@@ -105,10 +73,10 @@ def main():
     define_params(parser)
     settings = get_params(parser)
 
-    funcionStr = input("Defina a função: ")
+    funcion_str = input("Defina a função: ")
 
     try:
-        expr = sympy.sympify(funcionStr)
+        expr = sympy.sympify(funcion_str)
     except sympy.SympifyError as ex:
         print(f"Função inválida.\n{ex}")
         sys.exit(1)

@@ -54,7 +54,7 @@ class Genetic:
         return ordered[: int(self.params.ELITISM_RATE * len(ordered))]
 
     def get_tournament_pop(self, ordered: list[Chromosome]) -> list[Chromosome]:
-
+        '''takes the best of the tournament'''
         tournament_pop_size = int(self.params.TOURNAMENT_RATE * len(ordered))
 
         return [

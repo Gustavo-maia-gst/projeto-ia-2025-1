@@ -19,6 +19,7 @@ class Plotter:
         self.alg = alg
         self.params = params
         self.is_2d = is_2d
+        self._ax = None
 
     def show(self):
         '''shows a Cartesian plane with the function and representation of the individuals'''
@@ -32,9 +33,9 @@ class Plotter:
 
         ax.set_title(f"Animação de pontos sobre {self.alg.expr}")
 
-        ani = animation.FuncAnimation(
+        _ = animation.FuncAnimation(
             fig,
-            self._update,
+            self.update,
             frames=self.params.FPS,
             interval=1000 / self.params.FPS,
             blit=False,
@@ -75,8 +76,8 @@ class Plotter:
 
         return fig, ax
 
-    # pylint: disable=unused-argument
-    def _update(self, frame):
+    def update(self, _):
+        """update the plot"""
         pop = self.alg.next_generation()
         self._scatter_pop(pop)
 

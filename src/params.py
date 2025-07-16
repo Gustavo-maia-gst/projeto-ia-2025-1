@@ -8,22 +8,25 @@ A brief description of the selection methods:
 
     Elitism: The elitism rate selects the best chromosomes to go to the next generation.
 
-    Tournament: TOURNAMENT_RATE chromosomes are chosen by tournaments of size TOURNAMENT_SIZE, 
-                the best one goes to the next generation.
+    Tournament: TOURNAMENT_RATE chromosomes are chosen by tournaments of size TOURNAMENT_SIZE,
+                the best one gets mutated and goes to the next generation.
 
-    Crossover: CROSSOVER_RATE of the chromosomes are chosen by crossover, 
-               the best one goes to the next generation,
+    Crossover: CROSSOVER_RATE of the chromosomes are chosen by crossover,
+               two chromossomes are selected and crossed, the child gets mutated and goes 
+               to the next generation,
                crossover is applied to the chromosomes using the tournament method.
 
     Random: RANDOM_RATE of the chromosomes are randommically generated to go to the next generation.
 
-    Lottery: 1 - TOURNAMENT_RATE - ELITISM_RATE - CROSSOVER_RATE - RANDOM_RATE of the chromosomes 
+    Lottery: 1 - TOURNAMENT_RATE - ELITISM_RATE - CROSSOVER_RATE - RANDOM_RATE of the chromosomes
                  are chosen by lottery, the lucky one goes to the next generation,
 """
 
 
 class Params:
-    '''Default values as constants'''
+    """Default values as constants"""
+
+    DEFAULT_MAX_STEPS: int = 1000
     DEFAULT_POPULATION_SIZE: int = 32
     DEFAULT_STEP_SIZE: float = 1
     DEFAULT_TOURNAMENT_RATE: float = 0.4
@@ -43,6 +46,7 @@ class Params:
     POPULATION_SIZE: int = (
         DEFAULT_POPULATION_SIZE  # Number of chromosomes in the population
     )
+    MAX_STEPS: int = DEFAULT_MAX_STEPS  # Maximum number of steps
     STEP_SIZE: float = DEFAULT_STEP_SIZE  # Mutation rate of the chromosomes
 
     TOURNAMENT_RATE: float = (
