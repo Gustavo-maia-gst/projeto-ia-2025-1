@@ -98,8 +98,9 @@ def get_params(args: argparse.ArgumentParser) -> Params:
 
     return params
 
+def main():
+    '''the main part of program'''
 
-if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Genetic Algorithm")
     define_params(parser)
     settings = get_params(parser)
@@ -121,3 +122,7 @@ if __name__ == "__main__":
     plotter = Plotter(alg, settings, len(symbols) == 2)
 
     plotter.show()
+
+
+if __name__ == "__main__":
+    main()

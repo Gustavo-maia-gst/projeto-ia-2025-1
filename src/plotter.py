@@ -1,7 +1,8 @@
+'''graphical interface'''
 import numpy as np
 import matplotlib
 import matplotlib.pyplot as plt
-import matplotlib.animation as animation
+from matplotlib import animation
 
 from chromosome import Chromosome
 from genetic import Genetic
@@ -11,6 +12,7 @@ matplotlib.use("TkAgg")
 
 
 class Plotter:
+    '''graphical interface'''
     _sc: plt.scatter
 
     def __init__(self, alg: Genetic, params: Params, is_2d: bool):
@@ -19,7 +21,8 @@ class Plotter:
         self.is_2d = is_2d
 
     def show(self):
-        fig, ax = self._getFig()
+        '''shows a Cartesian plane with the function and representation of the individuals'''
+        fig, ax = self._get_fig()
         self._ax = ax
 
         if self.params.AUTO_FIT:
@@ -39,31 +42,30 @@ class Plotter:
 
         plt.show()
 
-    def _getFig(self):
+    def _get_fig(self):
         if self.is_2d:
-            return self._getFig2d()
-        else:
-            return self._getFig1d()
+            return self._get_fig2d()
+        return self._get_fig1d()
 
-    def _getFig2d(self):
-        x = np.linspace(-self.params.DEPTH, self.params.DEPTH, 25)
-        y = np.linspace(-self.params.DEPTH, self.params.DEPTH, 25)
-        X, Y = np.meshgrid(x, y)
-        points = np.c_[X.ravel(), Y.ravel()]
-        Z_flat = self.alg.batch_fitness(points)
+    def _get_fig2d(self):
+        x_aux = np.linspace(-self.params.DEPTH, self.params.DEPTH, 25)
+        y_aux = np.linspace(-self.params.DEPTH, self.params.DEPTH, 25)
+        x, y = np.meshgrid(x_aux, y_aux)
+        points = np.c_[x.ravel(), y.ravel()]
+        z_flat = self.alg.batch_fitness(points)
 
-        Z = np.array(Z_flat, dtype=np.float64).reshape(X.shape)
+        z = np.array(z_flat, dtype=np.float64).reshape(x.shape)
 
         fig, ax = plt.subplots(figsize=(8, 8))
-        contour = ax.contourf(X, Y, Z, levels=self.params.PLOT_LEVELS_2D, cmap="viridis")
-        ax.contour(X, Y, Z, levels=self.params.PLOT_LEVELS_2D, colors="black", linewidths=0.5)
+        contour = ax.contourf(x, y, z, levels=self.params.PLOT_LEVELS_2D, cmap="viridis")
+        ax.contour(x, y, z, levels=self.params.PLOT_LEVELS_2D, colors="black", linewidths=0.5)
         plt.colorbar(contour, ax=ax)
 
         self._sc = ax.scatter([], [], c="red", s=20, alpha=0.8)
 
         return fig, ax
 
-    def _getFig1d(self):
+    def _get_fig1d(self):
         x = np.linspace(-self.params.DEPTH, self.params.DEPTH, 100)
         y = self.alg.batch_fitness([[e] for e in x])
 
@@ -73,6 +75,7 @@ class Plotter:
 
         return fig, ax
 
+    # pylint: disable=unused-argument
     def _update(self, frame):
         pop = self.alg.next_generation()
         self._scatter_pop(pop)
@@ -81,8 +84,7 @@ class Plotter:
         def get_x_and_y(c: Chromosome):
             if self.is_2d:
                 return c.genes[0], c.genes[1]
-            else:
-                return c.genes[0], c.fitness(self.alg.expr)
+            return c.genes[0], c.fitness(self.alg.expr)
 
         points = list(map(get_x_and_y, pop))
         self._sc.set_offsets(np.array(points))
