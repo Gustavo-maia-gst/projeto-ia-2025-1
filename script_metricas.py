@@ -1,8 +1,10 @@
 import sympy
 import statistics
 import math
-from genetic import Genetic
-from params import Params
+import src
+from src.params import Params
+from src.chromosome import Chromosome
+from src.genetic import Genetic
 import time
 
 
