@@ -1,0 +1,10 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "algoritmo_genetico_maximo_de_funcao"
+version = "1.0.0"
+
+[tool.setuptools.dynamic]
+dependencies = {file = ["requirements.txt"]}
