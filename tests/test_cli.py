@@ -114,7 +114,9 @@ def test_main_type_error(monkeypatch, capsys):
     assert "não é uma string válida" in capsys.readouterr().out
 
 
-def test_script_entry_point():
-    with pytest.raises(SystemExit) as e:
+def test_entry_point_calls_original_main_and_stops(monkeypatch):
+    monkeypatch.setattr('builtins.input', lambda _: (_ for _ in ()).throw(StopIteration))
+    monkeypatch.setattr(sys, 'argv', ['cli.py'])
+
+    with pytest.raises(StopIteration):
         runpy.run_module('cli', run_name='__main__')
-    assert True
